@@ -1,5 +1,7 @@
 <?php
-
+ini_set('upload_max_filesize','512M');
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 define('ROOT', dirname(__FILE__));
 $libPath = ROOT . DIRECTORY_SEPARATOR . 'lib';
 $storagePath = ROOT . DIRECTORY_SEPARATOR . 'storage';
@@ -18,9 +20,8 @@ function _my_autoload($className)
 }
 spl_autoload_register('_my_autoload');
 
-//$storage = new LocalStorage($storagePath);
-$storage = new S3Storage();
-
+$storage = new LocalStorage($storagePath);
+//$storage = new S3Storage();
 $uploadHandler = new UploadHandler(array(
     'upload_dir' => $uploadPath,
     'storage' => $storage

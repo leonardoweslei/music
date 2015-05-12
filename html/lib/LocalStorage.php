@@ -35,8 +35,7 @@ class LocalStorage implements IStorage
     
     function getFile($hash, $headers)
     {
-        $hash = str_replace('.mp3', '', $hash);
-        $filePath = $this->storageDir . DIRECTORY_SEPARATOR . $hash;
+        $filePath = $this->getFilePath($hash);
         if(!file_exists($filePath))
         {
             return false;
@@ -44,8 +43,18 @@ class LocalStorage implements IStorage
         return file_get_contents($filePath);
     }
     
+    function getFilePath($hash)
+    {
+        $hash = str_replace('.mp3', '', $hash);
+        $filePath = $this->storageDir . DIRECTORY_SEPARATOR . $hash;
+        return $filePath;
+    }
+    
     function getInfo($hash)
     {
-        return filesize($this->getFile($hash));
+        $filePath = $this->getFilePath($hash);
+        $info=pathinfo($filePath);
+        $info['size']=filesize($filePath);
+        return $info;
     }
 }

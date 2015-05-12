@@ -1,7 +1,7 @@
 <?php
 
-define('BASE_URL', 'http://localhost:8081');
-define('BASE_PATH', '/var/www/music.kevinx.net/html');
+define('BASE_URL', 'http://localhost/music/html/');
+define('BASE_PATH', '/var/www/html/music/html');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'root');
 define('AWS_ACCESS_KEY', '');

@@ -4,3 +4,4 @@
 *.log
 logs/
 local_settings.php
+.idea/
