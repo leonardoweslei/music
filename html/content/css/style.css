@@ -42,9 +42,10 @@ img {
 }
 
 .cover {
+    background-size: cover;
+    background-color: #666666;
     background-position: center center;
     background-repeat: no-repeat;
-    display: inline-block;
     width: 100px;
     height: 100px;
     outline: none;
@@ -56,7 +57,8 @@ img {
     text-shadow: 0 0 1px #666666;
     font-size: 10px;
 }
-.cover .artist{
+
+.cover .artist {
     font-size: 12px;
 }
 

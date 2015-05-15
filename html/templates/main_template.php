@@ -36,8 +36,8 @@
             		<table cellspacing="0" cellpadding="0">
             		<tr>
             		<td class="cover">
-                        <div class="artirt">-</div>
-                        <div class="title">-</div>
+                        <span class="artist">-</span>
+                        <span class="title">-</span>
                     </td>
             		<td><a href="#" class="btnPrevious"><span>Previous</span></a></td>
             		<td>
