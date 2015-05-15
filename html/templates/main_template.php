@@ -35,6 +35,10 @@
             	<td>
             		<table cellspacing="0" cellpadding="0">
             		<tr>
+            		<td class="cover">
+                        <div class="artirt">-</div>
+                        <div class="title">-</div>
+                    </td>
             		<td><a href="#" class="btnPrevious"><span>Previous</span></a></td>
             		<td>
             			<a href="#pause" class="btnPause hide"><span>Pause</span></a>
