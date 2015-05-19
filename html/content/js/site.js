@@ -546,9 +546,9 @@ var app = {
         return str;
     },
     strip_tags: function (html) {
-        var tmp = document.createElement("div");
-        tmp.innerHTML = html;
-        return tmp.textconteudo || tmp.innerText;
+        var tmp = $("<div></div>");
+        tmp.html(html);
+        return tmp.text();
     },
     getURL: function (url) {
         var data = "";
@@ -630,7 +630,7 @@ var app = {
     changeFontSize: function () {
         var tamanho = [32, 24, 18];
         var elementos = ["h1", "h2", "#letra"];
-        $("#aumentar").click(function () {
+        $("#aumentar").click(function (e) {
             for (var i in elementos) {
                 var t = parseInt($(elementos[i]).css("font-size")) || tamanho[i];
                 t += 1;
@@ -638,9 +638,9 @@ var app = {
                     t = tamanho[i] + 10;
                 $(elementos[i]).css("font-size", t + "px");
             }
-            ;
+            e.preventDefault();
         })
-        $("#diminuir").click(function () {
+        $("#diminuir").click(function (e) {
             for (var i in elementos) {
                 var t = parseInt($(elementos[i]).css("font-size")) || tamanho[i];
                 t -= 1;
@@ -648,14 +648,14 @@ var app = {
                     t = tamanho[i] - 8;
                 $(elementos[i]).css("font-size", t + "px");
             }
-            ;
+            e.preventDefault();
         })
-        $("#normal").click(function () {
+        $("#normal").click(function (e) {
             for (var i in elementos) {
                 var t = tamanho[i];
                 $(elementos[i]).css("font-size", t + "px");
             }
-            ;
+            e.preventDefault();
         });
     }
 };
