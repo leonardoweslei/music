@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial;
     font-size: 12px;
@@ -145,19 +149,31 @@ img {
 }
 
 #player-holder {
-    width: 100%;
+    width: 20%;
     padding-left: 10px;
     background: #eee;
     background-position: 0 0;
     background-repeat: repeat;
+    left: 0px;
+    height: 100%;
+    position: absolute;
 }
 
 #tabs ul.main {
-    width: 100%;
+    width: 80%;
+    position: absolute;
+    left: 20%;
+    z-index: 10;
 }
 
 .ui-tabs .ui-tabs-panel {
-    padding: 5px;
+    width: 80%;
+    position: absolute;
+    left: 20%;
+    top: 25px;
+    height: 500px;
+    overflow: scroll;
+    z-index: 9;
 }
 
 audio {
@@ -241,4 +257,73 @@ audio {
     border: none;
     vertical-align: top;
     padding: 0 10px 0 0;
+}
+
+#capa {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#capa .sp-image {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#conteudo {
+    position: absolute;
+    padding: 10px;
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: auto;
+}
+
+#letra {
+    font-size: 18px;
+    text-shadow: 1px 1px 2px #666666;
+}
+
+.lyrics h1, .lyrics h2 {
+    text-shadow: 1px 1px 2px #666666;
+}
+
+.lyrics h1 {
+    font-size: 32px;
+}
+
+.lyrics h2 {
+    font-size: 24px;
+}
+
+#copy {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    text-align: right;
+    padding: 0px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+#controle {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
+    padding: 0px;
+    padding-right: 15px;
+    padding-top: 10px;
+}
+
+#controle a {
+    display: inline-block;
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 5px;
+    padding: 2px 5px;
+    text-decoration: none;
 }

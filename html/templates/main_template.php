@@ -2,27 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Music</title>
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.9.0/build/datatable/assets/skins/sam/datatable.css"> 
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://yui.yahooapis.com/combo?2.9.0/build/datatable/assets/skins/sam/datatable.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css"
+          type="text/css" media="all"/>
     <link rel="stylesheet" href="blueimp/jquery.fileupload-ui.css">
-	<link href="content/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="content/css/style.css" rel="stylesheet" type="text/css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-    <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/connection/connection_core-min.js&2.9.0/build/datasource/datasource-min.js&2.9.0/build/element/element-min.js&2.9.0/build/datatable/datatable-min.js&2.9.0/build/json/json-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js"></script>
+    <script type="text/javascript"
+            src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/connection/connection_core-min.js&2.9.0/build/datasource/datasource-min.js&2.9.0/build/element/element-min.js&2.9.0/build/datatable/datatable-min.js&2.9.0/build/json/json-min.js"></script>
     <script src="blueimp/jquery.iframe-transport.js"></script>
     <script src="blueimp/jquery.fileupload.js"></script>
     <script src="blueimp/jquery.fileupload-ui.js"></script>
     <script type="text/javascript" src="content/js/site.js"></script>
     <script type="text/javascript" src="content/js/seedrandom.js"></script>
     <script language="Javascript" type="text/javascript">
-    //<![CDATA[
+        //<![CDATA[
         var artistData = <?php echo json_encode($artists); ?>;
-        $(document).ready(function() {
+        $(document).ready(function () {
             app.init(artistData);
         });
-    //]]>
+        //]]>
     </script>
 </head>
 <body>
@@ -30,56 +34,63 @@
     <div id="tabs">
         <div id="player-holder">
             <audio id="player" controls="controls" autoplay="autoplay"></audio>
-        	<table cellspacing="0">
-        	<tr>
-            	<td>
-            		<table cellspacing="0" cellpadding="0">
-            		<tr>
-            		<td class="cover">
+            <table cellspacing="0">
+                <tr>
+                    <td class="cover">
                         <span class="artist">-</span>
                         <span class="title">-</span>
                     </td>
-            		<td><a href="#" class="btnPrevious"><span>Previous</span></a></td>
-            		<td>
-            			<a href="#pause" class="btnPause hide"><span>Pause</span></a>
-            			<a href="#play" class="btnPlay"><span>Play</span></a>
-            		</td>
-            		<td><a href="#" class="btnNext"><span>Next</span></a></td>
-            		</tr>
-            		</table>
-            	</td>
-            	<td width="200">
-            		<div class="progressbar"></div>
-            	</td>
-            	<td><a href="#" class="btnShuffle"><span>Shuffle</span></a></td>
-        	</tr>
-        	</table>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="progressbar"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td><a href="#" class="btnPrevious"><span>Previous</span></a></td>
+                                <td>
+                                    <a href="#pause" class="btnPause hide"><span>Pause</span></a>
+                                    <a href="#play" class="btnPlay"><span>Play</span></a>
+                                </td>
+                                <td><a href="#" class="btnNext"><span>Next</span></a></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td><a href="#" class="btnShuffle"><span>Shuffle</span></a></td>
+                </tr>
+            </table>
         </div>
         <ul class="main">
             <li><a href="#tabs-br">Browse</a></li>
             <li><a href="#tabs-pl">Playlist</a></li>
             <li><a href="#tabs-up">Upload</a></li>
+            <li><a href="#tabs-ly">Lyrics</a></li>
         </ul>
         <div id="tabs-br" class="artists">
             <div id="artists-table"></div>
         </div>
         <div id="tabs-pl">
             <div id="search-container">
-                Search: <input type="text" name="s" id="s" value="" /> 
-                <img src="content/images/help16.png" alt="" title="Supported syntax: regex, ||, &&, and ! for negative expressions. Example: 'scott pilgrim && !beck || the beatles'; Parentheses are also supported." />
-                <img src="content/images/loading.gif" alt="" class="search-loading hide" />
+                Search: <input type="text" name="s" id="s" value=""/>
+                <img src="content/images/help16.png" alt=""
+                     title="Supported syntax: regex, ||, &&, and ! for negative expressions. Example: 'scott pilgrim && !beck || the beatles'; Parentheses are also supported."/>
+                <img src="content/images/loading.gif" alt="" class="search-loading hide"/>
+
                 <div class="update-meta-container">
                     <div class="edit-meta">
                         <a href="#" class="link">Edit meta data</a>
                     </div>
                     <div class="edit-form hide">
                         <form method="post" action="update" id="update-meta-form">
-                            Folder: <input type="text" name="folder" id="folder" style="width:200px" />
-                            Artist: <input type="text" name="artist" id="artist" style="width:200px" />
-                            Album: <input type="text" name="album" id="album" style="width:200px" />
-                            Track: <input type="text" name="track" id="track" style="width:50px" />
-                            Title: <input type="text" name="title" id="title" style="width:250px" />
-                            <input type="submit" name="save" value="Save" class="save-button" />
+                            Folder: <input type="text" name="folder" id="folder" style="width:200px"/>
+                            Artist: <input type="text" name="artist" id="artist" style="width:200px"/>
+                            Album: <input type="text" name="album" id="album" style="width:200px"/>
+                            Track: <input type="text" name="track" id="track" style="width:50px"/>
+                            Title: <input type="text" name="title" id="title" style="width:250px"/>
+                            <input type="submit" name="save" value="Save" class="save-button"/>
                             <a href="#" class="cancel-button">cancel</a>
                         </form>
                     </div>
@@ -89,7 +100,9 @@
         </div>
         <div id="tabs-up">
             <p>Drag files here to upload.</p>
+
             <p>Supported: MP3</p>
+
             <div id="fileupload">
                 <form action="up" method="POST" enctype="multipart/form-data">
                     <div class="fileupload-buttonbar">
@@ -123,6 +136,10 @@
                     {{/if}}
                     <td class="cancel"><button>Cancel</button></td>
                 </tr>
+
+
+
+
             </script>
             <script id="template-download" type="text/x-jquery-tmpl">
                 <tr class="template-download{{if error}} ui-state-error{{/if}}">
@@ -155,8 +172,29 @@
                         <td colspan="2"></td>
                     {{/if}}
                 </tr>
+
+
+
+
             </script>
-        
+
+        </div>
+        <div id="tabs-ly" class="lyrics">
+            <h1></h1>
+
+            <div id="capa"></div>
+            <div id="conteudo">
+                <h1 id="titulo"></h1>
+
+                <h2 id="artista"></h2>
+
+                <div id="letra"></div>
+            </div>
+            <div id="controle">
+                <a href="#" id="diminuir">A-</a>
+                <a href="#" id="normal">A</a>
+                <a href="#" id="aumentar">A+</a>
+            </div>
         </div>
     </div>
 </div>

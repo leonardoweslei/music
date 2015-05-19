@@ -37,6 +37,7 @@ var app = {
         this.setupInventory();
         this.setupPlaylist();
         this.setupUpload();
+        this.changeFontSize();
 
         $(window).bind('hashchange', function (e) {
             if (me.ignoreHashChange > 0) {
@@ -336,7 +337,6 @@ var app = {
     // Selects the first song in the playlist.
     // Triggered when Play button is pressed before a song is selected.
     loadInitialSong: function () {
-        console.log('loadInitialSong');
         var dt = this.myDataTable;
         var rs = dt.getRecordSet();
         if (rs.getLength() == 0) {
@@ -407,8 +407,6 @@ var app = {
         if (!this.songExistsInPlaylist(hash)) {
             return;
         }
-        console.log('current time', this.getCurrentTime());
-        console.log('duration', this.getDuration());
         this.showPreloadNotice('Loading next song...');
         var nextSong = document.createElement('audio');
         nextSong.autoplay = 'autoplay';
@@ -416,7 +414,7 @@ var app = {
         nextSong.src = 'download/' + hash + '.mp3';
         nextSong.id = 'player';
         $(nextSong).bind('error', function (data) {
-            console.log('error', data);
+            //console.log('error', data);
             me.showPreloadNotice('ERROR: Could not load file');
             me.preloadNotice.effect('shake', {times: 4}, 55);
         });
@@ -475,11 +473,13 @@ var app = {
         this.currentSong = info.index;
         this.currentSongHash = hash;
         var title = info.record.getData('title');
-        console.log(info)
         var artist = info.record.getData('artist');
         document.title = title;
         $("#player-holder .artist").html(artist);
         $("#player-holder .title").html(title);
+
+        this.carregaMusica(info.record);
+
         var dt = this.myDataTable;
         dt.unselectAllRows();
         dt.selectRow(this.currentSong);
@@ -530,5 +530,132 @@ var app = {
             scope: this.dtArtists
         };
         this.dsArtists.sendRequest('?t=' + Math.random(), callback);
+    },
+    slugify: function (str) {
+        var str = str || '';
+        str = str.replace(/^\s+|\s+$/g, '');
+        str = str.toLowerCase();
+        var from = "àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ·/_,:;&";
+        var to = "aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY------e";
+        for (var i = 0, l = from.length; i < l; i++) {
+            str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        }
+        str = str.replace(/[^a-z0-9 -]/g, '')
+        str = str.replace(/\s+/g, '-');
+        str = str.replace(/-+/g, '-');
+        return str;
+    },
+    strip_tags: function (html) {
+        var tmp = document.createElement("div");
+        tmp.innerHTML = html;
+        return tmp.textconteudo || tmp.innerText;
+    },
+    getURL: function (url) {
+        var data = "";
+        $.ajaxSetup({async: false});
+
+        var response = $.get('getUrl', {url: url}, function (data) {
+            data = d;
+        });
+
+        data = response.responseText;
+
+        if (typeof data == "undefined")
+            data = "";
+        return data;
+    },
+    carregaMusica: function (track) {
+        if (typeof track == "undefined") {
+            $('#capa, #titulo, #artista, #letra').html("");
+            return;
+        }
+
+        var title = track.getData('title');
+        var artist = track.getData('artist');
+
+        if ($('#titulo').html() == title) {
+            return;
+        }
+
+        $('#capa, #titulo, #artista, #letra').html("");
+        //image = Image.forTrack(track, {width: '100%', height: '100%', player: false});
+        $('#titulo').html(title);
+        //$('#capa').fadeOut().html('').append(image.node).fadeIn();
+        var artists = [artist];
+        var artistas = [];
+        for (var i = 0; i < artists.length; i++) {
+            artistas.push(artists[i]);
+        }
+
+        $('#artista').html(artistas.join(', '));
+        if (title == "Spotify" || artistas[0] == "Spotify") {
+            $("#letra").html("<br><br>" +
+            "<h1>:-|</h1>" +
+            "<br><br>");
+            return;
+        }
+        var musica = title.split(/[\(\)\-]/g);
+        musica = title[0] == "(" ? musica[1] : musica[0];
+        var sMusica = this.slugify(musica);
+        var fontes = new Array(
+            ["vagalume.com.br", "http://www.vagalume.com.br/__artista/" + sMusica + ".html", "#lyr_original"],
+            ["letras.mus.br", "http://letras.mus.br/__artista/" + sMusica + "/", "#div_letra"],
+            ["musica.com.br", "http://musica.com.br/artistas/__artista/m/" + sMusica + "/letra.html", '.letra'],
+            ["cifraclub.com.br", "http://www.cifraclub.com.br/__artista/" + sMusica + "/", '#ct_cifra']
+        );
+        for (var i in artistas) {
+            var sArtista = this.slugify(artistas[i]);
+            for (var j in fontes) {
+                var f = fontes[j];
+                var url = f[1].replace("__artista", sArtista);
+                var url = f[1].replace("__artista", sArtista);
+                var d = $(this.getURL(url)).find(f[2]).html();
+                var dx = this.strip_tags(d);
+                dx = dx.replace(/\s/g, "");
+                if (d != "" && dx != "") {
+                    if (f[0] == 'cifraclub.com.br')
+                        d = "<pre>" + d + "</pre>";
+                    $("#letra").html("<br>" + d + "<br>" +
+                    "<a href=\"" + f[1].replace("__artista", sArtista) + "\">Fonte: " + f[0] + "</a>");
+                    if (f[0] == 'cifraclub.com.br')
+                        $("#letra b").remove();
+                    return;
+                }
+            }
+        }
+        $("#letra").html("<br><br>" +
+        "<h1>:(</h1>" +
+        "<br><br>");
+    },
+    changeFontSize: function () {
+        var tamanho = [32, 24, 18];
+        var elementos = ["h1", "h2", "#letra"];
+        $("#aumentar").click(function () {
+            for (var i in elementos) {
+                var t = parseInt($(elementos[i]).css("font-size")) || tamanho[i];
+                t += 1;
+                if (t > tamanho[i] + 10)
+                    t = tamanho[i] + 10;
+                $(elementos[i]).css("font-size", t + "px");
+            }
+            ;
+        })
+        $("#diminuir").click(function () {
+            for (var i in elementos) {
+                var t = parseInt($(elementos[i]).css("font-size")) || tamanho[i];
+                t -= 1;
+                if (t < tamanho[i] - 8)
+                    t = tamanho[i] - 8;
+                $(elementos[i]).css("font-size", t + "px");
+            }
+            ;
+        })
+        $("#normal").click(function () {
+            for (var i in elementos) {
+                var t = tamanho[i];
+                $(elementos[i]).css("font-size", t + "px");
+            }
+            ;
+        });
     }
 };

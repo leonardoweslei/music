@@ -46,6 +46,9 @@ class MusicApp
             case 'info':
                 $this->handleInfo($args);
                 break;
+            case 'getUrl':
+                $this->handleGetUrl($args);
+                break;
             case 'test':
                 $this->handleTest($args);
                 break;
@@ -298,6 +301,11 @@ class MusicApp
         echo "Total size: $total MB\n";
     }
     
+    function handleGetUrl($args)
+    {
+        echo @file_get_contents($_GET['url']);
+    }
+
     function handleTest()
     {
     }
