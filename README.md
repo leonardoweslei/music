@@ -10,6 +10,6 @@ The hardest part of this project was properly interpreting ID3 tags. Since ID3 t
 
 In the future, I plan to make it easier to manage song meta data, simplify the search syntax, and expand the accepted file formats (there are browser limitations here since I am using the `<audio>` tag).
 
-Other interesting aspects of this project include the use of the Amazon S3 Storage API, Google Image Search API, and jQuery UI.
+Other interesting aspects of this project include the use of the Amazon S3Instance Storage API, Google Image Search API, and jQuery UI.
 
 ![](https://github.com/kdeloach/music/raw/master/preview.png)
