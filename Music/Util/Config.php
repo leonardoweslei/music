@@ -21,7 +21,7 @@ class Config
 
         $this->configDir = $this->getParentPath(__FILE__) . "config" . DIRECTORY_SEPARATOR;
 
-        $this->loadConfiguration("dev.ini");
+        $this->loadConfiguration();
     }
 
     public function getParentPath($file)
@@ -56,8 +56,16 @@ class Config
     /**
      * @param $file
      */
-    private function loadConfiguration($file)
+    private function loadConfiguration()
     {
+        if (is_file($this->configDir . 'prod.ini')) {
+            $file = 'prod.ini';
+        } elseif (is_file($this->configDir . 'dev.ini')) {
+            $file = 'dev.ini';
+        } else {
+            throw new \Exception('Config file not found!');
+        }
+
         $this->config = @parse_ini_file($this->configDir . $file, true);
 
         $this->setupPHPSettings();
