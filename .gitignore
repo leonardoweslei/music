@@ -3,5 +3,5 @@
 *.txt
 *.log
 logs/
-local_settings.php
 .idea/
+Music/config/dev.ini
