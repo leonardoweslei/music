@@ -12,13 +12,23 @@ class SongFinder extends DAO
         $sql  = "select id, folder, artist, album, track, title, hash, unix_timestamp(dateAdded) dateAdded, unix_timestamp(dateUpdated) dateUpdated from music_combine where hash=? limit 1";
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute(array($hash));
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song');
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
 
         if (count($result) > 0) {
             return $result[0];
         }
 
         return false;
+    }
+
+    function getByArtist($artist)
+    {
+        $sql  = "select id, folder, artist, album, track, title, hash, unix_timestamp(dateAdded) dateAdded, unix_timestamp(dateUpdated) dateUpdated from music_combine where artist like ?";
+        $stmt = $this->getDatabaseInstance()->prepare($sql);
+        $stmt->execute(array($artist));
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
+
+        return $result;
     }
 
     function search($q)
@@ -31,7 +41,7 @@ class SongFinder extends DAO
         list($sql, $params) = $this->createSearchQuery($q);
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute($params);
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song');
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
 
         return $result;
     }
@@ -210,7 +220,7 @@ class SongFinder extends DAO
         $sql  = "select id, folder, artist, album, track, title, hash, unix_timestamp(dateAdded) dateAdded, unix_timestamp(dateUpdated) dateUpdated from music_combine order by artist, album, length(track), track";
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song');
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
 
         return $result;
     }
@@ -224,23 +234,29 @@ class SongFinder extends DAO
         $stmt->execute();
         $result = $stmt->fetchAll(\PDO::FETCH_NUM);
         $nodes  = array();
+
         foreach ($result as $row) {
             list($folder, $artist, $album) = $row;
+
             if (!isset($nodes[$folder])) {
                 $nodes[$folder]            = array();
                 $nodes[$folder]['artists'] = array();
                 $nodes[$folder]['albums']  = array();
             }
+
             $nodes[$folder]['artists'][] = $artist;
             $nodes[$folder]['albums'][]  = $album;
         }
+
         $clean = array('folders' => array());
+
         foreach ($nodes as $folder => $children) {
-            $f                  = array(
+            $f = array(
                 'name'    => $folder,
                 'artists' => array_values(array_unique($children['artists'])),
                 'albums'  => array_values(array_unique($children['albums']))
             );
+
             $clean['folders'][] = $f;
         }
 

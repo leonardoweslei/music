@@ -483,8 +483,19 @@ var app = {
         this.currentSongHash = hash;
         var title = info.record.getData('title');
         var artist = info.record.getData('artist');
-        document.title = title;
+        document.title = artist + ' - ' + title;
+        var link = $('<a class="text-small" href="#">Update Artist Name with MusicBrainz</a>');
+
+        var obj = this;
+
+        link.click(function (e) {
+            obj.updateArtistByBraiz(artist);
+            e.preventDefault();
+        });
+
         $("#player-holder .artist").html(artist);
+        $("#player-holder .artist").append(link);
+
         $("#player-holder .title").html(title);
 
         this.carregaMusica(info.record);
@@ -671,5 +682,10 @@ var app = {
         url = url.join('/') + '/' + part;
 
         return url;
+    },
+    updateArtistByBraiz: function (artist) {
+        $.getJSON(this.getPath('updateArtistByBrainz/' + artist), function (d) {
+            alert('Old name: ' + d.old + '\n' + 'New name: ' + d.new + '\n' + 'Songs affecteds: ' + d.affected + '\n');
+        });
     }
 };

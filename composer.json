@@ -1,0 +1,6 @@
+{
+    "require": {
+        "mikealmond/musicbrainz": "0.2.*",
+        "guzzle/guzzle": "~3.8.0"
+    }
+}

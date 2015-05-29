@@ -9,6 +9,7 @@ use Music\Lib\SongOverride;
 use Music\Lib\Storage;
 use Music\Lib\UploadManager;
 use Music\Lib\ViewManager;
+use Music\Util\Brainz;
 
 class App
 {
@@ -240,6 +241,9 @@ class App
                 break;
             case 'getUrl':
                 $this->handleGetUrl($args);
+                break;
+            case 'updateArtistByBrainz':
+                $this->handleUpdateArtistByBraiz($param[1]);
                 break;
             case 'test':
                 $this->handleTest($args);
@@ -499,6 +503,31 @@ class App
 
     function handleTest()
     {
+    }
+
+    function handleUpdateArtistByBraiz($artist)
+    {
+        $brainz = new Brainz();
+
+        $artistName = $brainz->searchArtist($artist);
+
+        $arrSongs = array();
+
+        if ($artist != $artistName) {
+            $objSongFinder = new SongFinder($this->getDatabaseInstance());
+            $arrSongs      = $objSongFinder->getByArtist($artist);
+
+            foreach ($arrSongs as $objSong) {
+                $objSong->folder = $artistName;
+                $objSong->artist = $artistName;
+                $objSong->save();
+            }
+        }
+
+        $this->getViewManager()->setType('JSON');
+        $this->getViewManager()->setVar('affected', count($arrSongs));
+        $this->getViewManager()->setVar('old', $artist);
+        $this->getViewManager()->setVar('new', $artistName);
     }
 
     public static function registerAutoloader()

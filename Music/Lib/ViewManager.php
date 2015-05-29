@@ -115,13 +115,12 @@ class ViewManager
         } elseif ($this->getType() == 'HTML') {
             $file = $this->getViewPath() . $this->getFile();
 
-            extract($this->vars);
-
-            ob_start();
-
-            include $file;
-
-            $out = ob_get_clean();
+            if (is_file($file)) {
+                extract($this->vars);
+                ob_start();
+                include($file);
+                $out = ob_get_clean();
+            }
         }
 
         return $out;
