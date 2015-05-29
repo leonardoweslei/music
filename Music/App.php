@@ -196,7 +196,7 @@ class App
 
         $request = $_SERVER['DOCUMENT_ROOT'] . $part;
 
-        $param = str_replace($root, '', $request);
+        $param = trim(str_replace($root, '', $request), '/');
         //$param = preg_split("/[\/\?]/", $param);
         $param = explode("/", $param);
 
@@ -207,50 +207,18 @@ class App
     {
         $param = $this->identifyParameters();
         $page  = $param[0];
-        $args  = array();
+        $args  = array_slice($param, 1);
 
         if (($pos = strpos($page, '/')) !== false) {
             $args = explode('/', $page);
             $page = array_shift($args);
         }
 
-        switch ($page) {
-            case 'up':
-                $this->handleUpload($args);
-                break;
-            case 'search':
-                $this->handleSearch($args);
-                break;
-            case 'download':
-                $this->handleDownload($param[1]);
-                break;
-            case 'art':
-                $this->handleArt($param[1]);
-                break;
-            case 'update':
-                $this->handleUpdate($args);
-                break;
-            case 'inventory':
-                $this->handleInventory($args);
-                break;
-            case 'import':
-                $this->handleImport($args);
-                break;
-            case 'info':
-                $this->handleInfo($args);
-                break;
-            case 'getUrl':
-                $this->handleGetUrl($args);
-                break;
-            case 'updateArtistByBrainz':
-                $this->handleUpdateArtistByBraiz($param[1]);
-                break;
-            case 'test':
-                $this->handleTest($args);
-                break;
-            default:
-                $this->handleDefault();
-                break;
+        $action = "handle" . ucfirst($page);
+        if (method_exists($this, $action)) {
+            $this->$action($args);
+        } elseif ($page == "" || $page == "index.php") {
+            $this->handleDefault();
         }
 
         echo $this->getViewManager();
@@ -298,8 +266,10 @@ class App
         $this->getViewManager()->setVar('songs', $songs);
     }
 
-    function handleDownload($hash)
+    function handleDownload($args)
     {
+        $hash = array_shift($args);
+
         $info = $this->storageManager->getInfo($hash);
 
         $fullLength = $info['size'];
@@ -358,8 +328,10 @@ class App
         }
     }
 
-    function handleArt($hash)
+    function handleArt($args)
     {
+        $hash = array_shift($args);
+
         $finder = new SongFinder($this->getDatabaseInstance());
         $song   = $finder->getByHash($hash);
 
@@ -505,21 +477,20 @@ class App
     {
     }
 
-    function handleUpdateArtistByBraiz($artist)
+    function handleUpdateArtistName($args)
     {
-        $brainz = new Brainz();
-
-        $artistName = $brainz->searchArtist($artist);
+        $artist        = $_GET['old'];
+        $newArtistName = $_GET['new'];
 
         $arrSongs = array();
 
-        if ($artist != $artistName) {
+        if ($artist != $newArtistName) {
             $objSongFinder = new SongFinder($this->getDatabaseInstance());
             $arrSongs      = $objSongFinder->getByArtist($artist);
 
             foreach ($arrSongs as $objSong) {
-                $objSong->folder = $artistName;
-                $objSong->artist = $artistName;
+                $objSong->folder = $newArtistName;
+                $objSong->artist = $newArtistName;
                 $objSong->save();
             }
         }
@@ -527,7 +498,19 @@ class App
         $this->getViewManager()->setType('JSON');
         $this->getViewManager()->setVar('affected', count($arrSongs));
         $this->getViewManager()->setVar('old', $artist);
-        $this->getViewManager()->setVar('new', $artistName);
+        $this->getViewManager()->setVar('new', $newArtistName);
+    }
+
+    function handleGetArtistByBrainz($args)
+    {
+        $artist = $_GET['artist'];
+
+        $brainz = new Brainz();
+
+        $artists = $brainz->searchArtist($artist);
+
+        $this->getViewManager()->setType('JSON');
+        $this->getViewManager()->setVar('artists', $artists);
     }
 
     public static function registerAutoloader()

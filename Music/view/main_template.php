@@ -7,17 +7,24 @@
           href="http://yui.yahooapis.com/combo?2.9.0/build/datatable/assets/skins/sam/datatable.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css"
           type="text/css" media="all"/>
-    <link rel="stylesheet" href="blueimp/jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="assets/blueimp-file-upload.jquery/css/jquery.fileupload-ui.css">
     <link href="content/css/style.css" rel="stylesheet" type="text/css"/>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="assets/jquery-ui/jquery-ui.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js"></script>
     <script type="text/javascript"
             src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/connection/connection_core-min.js&2.9.0/build/datasource/datasource-min.js&2.9.0/build/element/element-min.js&2.9.0/build/datatable/datatable-min.js&2.9.0/build/json/json-min.js"></script>
-    <script src="blueimp/jquery.iframe-transport.js"></script>
-    <script src="blueimp/jquery.fileupload.js"></script>
-    <script src="blueimp/jquery.fileupload-ui.js"></script>
+
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.min.css">
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="assets/blueimp-file-upload.jquery/js/vendor/jquery.ui.widget.js"></script>
+    <script src="assets/blueimp-file-upload.jquery/js/jquery.iframe-transport.js"></script>
+    <script src="assets/blueimp-file-upload.jquery/js/jquery.fileupload.js"></script>
+    <script src="assets/blueimp-file-upload.jquery/js/jquery.fileupload-ui.js"></script>
+
     <script type="text/javascript" src="content/js/site.js"></script>
     <script type="text/javascript" src="content/js/seedrandom.js"></script>
     <script language="Javascript" type="text/javascript">
@@ -57,6 +64,10 @@
                         </table>
                     </td>
                     <td><a href="#" class="btnShuffle"><span>Shuffle</span></a></td>
+                </tr>
+                <tr>
+                    <td class="actions">
+                    </td>
                 </tr>
             </table>
         </div>

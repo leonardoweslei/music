@@ -24,7 +24,9 @@ class Brainz
 
     public function searchArtist($artistName)
     {
-        $artistFounded = $artistName;
+        $artistsFounded = array();
+
+        $artistsFounded[$artistName] = $artistName;
 
         $args = array(
             "artist" => $artistName
@@ -35,16 +37,16 @@ class Brainz
 
             if (count($releaseArtists) > 0) {
                 foreach ($releaseArtists as $artist) {
-                    if ($artist->getScore() > 98) {
-                        break;
+                    if ($artist->getScore() > 60) {
+                        $name = $artist->getName();
+
+                        $artistsFounded[$name] = $name;
                     }
                 }
-
-                $artistFounded = $artist->getName();
             }
         } catch (\Exception $e) {
         }
 
-        return $artistFounded;
+        return array_values($artistsFounded);
     }
 }

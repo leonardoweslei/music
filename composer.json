@@ -1,6 +1,7 @@
 {
-    "require": {
-        "mikealmond/musicbrainz": "0.2.*",
-        "guzzle/guzzle": "~3.8.0"
-    }
+  "require": {
+    "mikealmond/musicbrainz": "0.2.*",
+    "guzzle/guzzle": "~3.8.0",
+    "phansys/getid3": "dev-master"
+  }
 }

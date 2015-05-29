@@ -1,3 +1,60 @@
+(function ($) {
+
+    $.showModal = function (header, content, callbackOk, callbackClose, hideOk) {
+        hideOk = hideOk || false;
+        header = header || 'title';
+        content = content || '';
+        callbackOk = callbackOk || function () {
+        };
+        callbackClose = callbackClose || function () {
+        };
+
+        var HTML = '<div class="modal fade generic-modal">' +
+            '  <div class="modal-dialog">' +
+            '    <div class="modal-content">' +
+            '      <div class="modal-header">' +
+            '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+            '        <h4 class="modal-title">' + header +
+            '        </h4>' +
+            '      </div>' +
+            '      <div class="modal-body">' + content +
+            '      </div>' +
+            '      <div class="modal-footer">' +
+            '        <button type="button" class="btn btn-default close-button-dialog" data-dismiss="modal">Close</button>' +
+            (!hideOk ? '<button type="button" class="btn btn-primary ok-button-dialog">Ok</button>' : '') +
+            '      </div>' +
+            '   </div><!-- /.modal-content -->' +
+            '  </div><!-- /.modal-dialog -->' +
+            '</div><!-- /.modal -->';
+
+        var container = $('<div></div>').html(HTML);
+
+        $('body').append(container);
+
+        var modalElement = container.find('.generic-modal');
+
+        modalElement.modal();
+
+        container.find('.ok-button-dialog').bind('click', function () {
+            callbackOk();
+            modalElement.modal('hide');
+        });
+
+        container.find('.close-button-dialog').bind('click', function () {
+            callbackClose();
+            modalElement.modal('hide');
+        });
+
+        modalElement.on('hidden.bs.modal', function () {
+            $(this).data('bs.modal', null);
+            container.remove();
+        });
+
+        return modalElement;
+    }
+}(jQuery));
+
+
 var app = {
     init: function (artistData) {
         var me = this;
@@ -53,10 +110,10 @@ var app = {
             this.currentSongHash = qs.s;
             this.search.val(qs.q);
             this.locationChanged();
-            $("#tabs").tabs().tabs('select', 1);
+            $("#tabs").tabs().tabs("option", "active", 1);
         }
         else {
-            $("#tabs").tabs().tabs('select', 0);
+            $("#tabs").tabs().tabs("option", "active", 0);
         }
     },
     setupAudioControls: function () {
@@ -125,7 +182,7 @@ var app = {
         this.dtArtists = new YAHOO.widget.DataTable("artists-table", colArtists, this.dsArtists, null);
 
         // setup action when artists/albums are clicked on Browse tab
-        $('.searchable').live('click', function (e) {
+        $('.searchable').on('click', function (e) {
             e.preventDefault();
             me.addToPlaylist($(this).text());
             var pos = $(this).position();
@@ -209,12 +266,12 @@ var app = {
             sequentialUploads: true
         });
         // Open download dialogs via iframes, to prevent aborting current uploads:
-        $('#fileupload .files a:not([target^=_blank])').live('click', function (e) {
+        $('#fileupload .files a:not([target^=_blank])').on('click', function (e) {
             e.preventDefault();
             $('<iframe style="display:none;"></iframe>').prop('src', this.href).appendTo('body');
         });
         $('#fileupload').bind('fileuploadstart', function (e) {
-            $("#tabs").tabs('select', 2);
+            $("#tabs").tabs("option", "active", 2);
         });
         $('#fileupload').bind('fileuploaddone', function (e) {
             me.updateInventory();
@@ -493,18 +550,20 @@ var app = {
             e.preventDefault();
         });
 
+        $("#player-holder .actions").html('');
         $("#player-holder .artist").html(artist);
-        $("#player-holder .artist").append(link);
-
         $("#player-holder .title").html(title);
 
-        this.carregaMusica(info.record);
+        $("#player-holder .actions").append(link);
 
         var dt = this.myDataTable;
         dt.unselectAllRows();
         dt.selectRow(this.currentSong);
         // position of song row in table - 25 (#songs-table margin-top)
         $(window).scrollTop($(dt.getTrEl(this.currentSong)).position().top - 45);
+
+
+        this.carregaMusica(info.record);
     },
     // playlist query (q), current song (s), shuffle seed (r)
     setWindowHash: function (q, s, r) {
@@ -565,7 +624,7 @@ var app = {
         var data = "";
         $.ajaxSetup({async: false});
 
-        var response = $.get('getUrl', {url: url}, function (data) {
+        var response = $.get('getUrl', {url: url}, function (d) {
             data = d;
         });
 
@@ -614,6 +673,7 @@ var app = {
             ["musica.com.br", "http://musica.com.br/artistas/__artista/m/" + sMusica + "/letra.html", '.letra'],
             ["cifraclub.com.br", "http://www.cifraclub.com.br/__artista/" + sMusica + "/", '#ct_cifra']
         );
+
         for (var i in artistas) {
             var sArtista = this.slugify(artistas[i]);
             for (var j in fontes) {
@@ -684,8 +744,34 @@ var app = {
         return url;
     },
     updateArtistByBraiz: function (artist) {
-        $.getJSON(this.getPath('updateArtistByBrainz/' + artist), function (d) {
-            alert('Old name: ' + d.old + '\n' + 'New name: ' + d.new + '\n' + 'Songs affecteds: ' + d.affected + '\n');
+        var api = this;
+
+        $.getJSON(this.getPath('getArtistByBrainz?artist=' + encodeURIComponent(artist)), function (d) {
+            var modalTitle = 'Select the correct name of this artist:';
+            var message = '';
+            for (var i in d) {
+                var artistName = d[i];
+                var checked = (artistName == artist ? "checked" : "")
+                message += '<br><label><input required="required" type="radio" name="artistName" value="' + artistName + '" ' + checked + '> ' + artistName + '</label>';
+            }
+
+            message += '<br><label><input required="required" type="radio" name="artistName" value="__other"> ' +
+            '           <input type="text" name="artistNameText" value=""></label>';
+            $.showModal(modalTitle, message, function () {
+                var newArtistName = $('input[name=artistName]:checked').val() || '';
+
+                if (newArtistName == '__other') {
+                    newArtistName = $('input[name=artistNameText]').val();
+                }
+
+                if (newArtistName) {
+                    $.getJSON(api.getPath('updateArtistName?old=' + encodeURIComponent(artist) + "&new=" + encodeURIComponent(newArtistName), function (d) {
+                        api.showPreloadNotice('Old Name: ' + d.old + '\n' +
+                        'New Name: ' + d.new + '\n' +
+                        'Songs affecteds: ' + d.affected);
+                    }));
+                }
+            });
         });
     }
 };

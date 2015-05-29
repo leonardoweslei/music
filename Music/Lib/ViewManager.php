@@ -4,6 +4,7 @@ namespace Music\Lib;
 class ViewManager
 {
     private $viewPath = "";
+    private $rootPath = "";
     private $vars = array();
     private $type = 'HTML';
     private $file = null;
@@ -14,6 +15,9 @@ class ViewManager
         $this->setConfig($config);
 
         $this->viewPath = $this->config->getParentPath(__FILE__) . 'view' . DIRECTORY_SEPARATOR;
+        $this->rootPath = $this->config->getParentPath(
+            __FILE__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR
+        );
     }
 
     /**
@@ -30,6 +34,22 @@ class ViewManager
     public function setViewPath($viewPath)
     {
         $this->viewPath = $viewPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRootPath()
+    {
+        return $this->rootPath;
+    }
+
+    /**
+     * @param string $rootPath
+     */
+    public function setRootPath($rootPath)
+    {
+        $this->rootPath = $rootPath;
     }
 
     /**
