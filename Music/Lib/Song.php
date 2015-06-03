@@ -41,7 +41,8 @@ sql;
         if (strpos($filename, '?') !== false) {
             return false;
         }
-        $getID3 = new getid3();
+
+        $getID3 = new \getID3();
         $detail = $getID3->analyze($filename);
         if ($detail != null && $detail !== false && isset($detail['error'])) {
             return false;

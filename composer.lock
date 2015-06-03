@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c53f1ba0b77c2638f35b5362286c566d",
+    "hash": "318679ab634c78644748dddebf58584a",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -157,22 +157,68 @@
             "time": "2014-02-19 19:45:27"
         },
         {
-            "name": "symfony/event-dispatcher",
-            "version": "v2.6.8",
-            "target-dir": "Symfony/Component/EventDispatcher",
+            "name": "nass600/get-id3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "672593bc4b0043a0acf91903bb75a1c82d8f2e02"
+                "url": "https://github.com/nass600/getID3.git",
+                "reference": "4012fa3d592f499a6ed192190291d585c12188d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/672593bc4b0043a0acf91903bb75a1c82d8f2e02",
-                "reference": "672593bc4b0043a0acf91903bb75a1c82d8f2e02",
+                "url": "https://api.github.com/repos/nass600/getID3/zipball/4012fa3d592f499a6ed192190291d585c12188d2",
+                "reference": "4012fa3d592f499a6ed192190291d585c12188d2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.2"
+            },
+            "type": "php-library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "getid3/getid3.php",
+                    "getid3/write.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "James Heinrich"
+                }
+            ],
+            "description": "PHP library for handling audio/video files metadata",
+            "homepage": "https://github.com/nass600/getID3",
+            "keywords": [
+                "id3",
+                "metadata",
+                "mp3"
+            ],
+            "time": "2014-11-04 11:40:12"
+        },
+        {
+            "name": "symfony/event-dispatcher",
+            "version": "v2.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/EventDispatcher.git",
+                "reference": "687039686d0e923429ba6e958d0baa920cd5d458"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/687039686d0e923429ba6e958d0baa920cd5d458",
+                "reference": "687039686d0e923429ba6e958d0baa920cd5d458",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "psr/log": "~1.0",
@@ -189,11 +235,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\EventDispatcher\\": ""
                 }
             },
@@ -213,13 +259,15 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:18:45"
+            "time": "2015-05-02 15:21:08"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "nass600/get-id3": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

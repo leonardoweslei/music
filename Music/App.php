@@ -402,12 +402,13 @@ class App
     {
         set_time_limit(0);
         error_reporting(E_ALL);
+        $fileLog = $this->getRootPath() . 'import.log';
 
-        if (file_exists('import.log')) {
-            unlink('import.log');
+        if (file_exists($fileLog)) {
+            unlink($fileLog);
         }
 
-        $srcDirs = array('C:/Users/Kevin/Music');
+        $srcDirs = array('/media/pendrive/');
 
         $import = new LocalImport();
         $dirs   = array();
@@ -426,7 +427,7 @@ class App
                     echo "$filePath\n";
 
                     if ($this->storageManager->saveFile($filePath)) {
-                        $song         = new Song();
+                        $song         = new Song($this->getDatabaseInstance());
                         $song->folder = $info['artist'];
                         $song->artist = $info['artist'];
                         $song->album  = $info['album'];
@@ -441,7 +442,7 @@ class App
                     echo "(skipping) couldn't get ID3 tags\n";
                 }
 
-                file_put_contents('import.log', ob_get_contents(), FILE_APPEND);
+                file_put_contents($fileLog, ob_get_contents(), FILE_APPEND);
                 ob_flush();
             }
 
