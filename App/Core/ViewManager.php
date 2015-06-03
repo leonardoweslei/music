@@ -89,7 +89,8 @@ class ViewManager
 
     public function outputHTML()
     {
-        $file = $this->getViewPath() . $this->getViewFile();
+        $out  = "";
+        $file = Config::getViewPath() . $this->getViewFile();
 
         if (is_file($file)) {
             extract($this->vars);
