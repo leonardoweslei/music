@@ -1,7 +1,7 @@
 <?php
 namespace Music\Lib\Storage;
 
-use Music\Lib\Song;
+use Music\Model\Song;
 
 require 'S3Instance.php';
 

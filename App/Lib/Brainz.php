@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Music\Util;
+namespace Music\Lib;
 
 use Guzzle\Http\Client;
 use MusicBrainz\Filters\ArtistFilter;

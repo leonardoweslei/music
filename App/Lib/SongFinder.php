@@ -1,6 +1,8 @@
 <?php
 namespace Music\Lib;
 
+use Music\Core\DAO;
+
 class SongFinder extends DAO
 {
     // This class is now a weird combination of SongeFinder and mysql query where clause tokenizer thing...
@@ -12,7 +14,7 @@ class SongFinder extends DAO
         $sql  = "select id, folder, artist, album, track, title, hash, unix_timestamp(dateAdded) dateAdded, unix_timestamp(dateUpdated) dateUpdated from music_combine where hash=? limit 1";
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute(array($hash));
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Model\Song', array($this->getDatabaseInstance()));
 
         if (count($result) > 0) {
             return $result[0];
@@ -26,7 +28,7 @@ class SongFinder extends DAO
         $sql  = "select id, folder, artist, album, track, title, hash, unix_timestamp(dateAdded) dateAdded, unix_timestamp(dateUpdated) dateUpdated from music_combine where artist like ?";
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute(array($artist));
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Model\Song', array($this->getDatabaseInstance()));
 
         return $result;
     }
@@ -41,7 +43,7 @@ class SongFinder extends DAO
         list($sql, $params) = $this->createSearchQuery($q);
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute($params);
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Model\Song', array($this->getDatabaseInstance()));
 
         return $result;
     }
@@ -220,7 +222,7 @@ class SongFinder extends DAO
         $sql  = "select id, folder, artist, album, track, title, hash, unix_timestamp(dateAdded) dateAdded, unix_timestamp(dateUpdated) dateUpdated from music_combine order by artist, album, length(track), track";
         $stmt = $this->getDatabaseInstance()->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Lib\Song', array($this->getDatabaseInstance()));
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS, 'Music\Model\Song', array($this->getDatabaseInstance()));
 
         return $result;
     }

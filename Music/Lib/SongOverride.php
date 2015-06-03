@@ -1,6 +1,8 @@
 <?php
 namespace Music\Lib;
 
+use Music\Core\DAO;
+
 class SongOverride extends DAO
 {
     var $id;

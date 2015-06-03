@@ -1,5 +1,6 @@
 {
   "require": {
+    "php-activerecord/php-activerecord": "dev-master",
     "mikealmond/musicbrainz": "0.2.*",
     "guzzle/guzzle": "~3.8.0",
     "nass600/get-id3": "dev-master"

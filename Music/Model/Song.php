@@ -1,5 +1,7 @@
 <?php
-namespace Music\Lib;
+namespace Music\Model;
+
+use Music\Core\DAO;
 
 class Song extends DAO
 {

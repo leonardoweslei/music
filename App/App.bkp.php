@@ -1,15 +1,15 @@
 <?php
 namespace Music;
 
-use Music\Lib\DatabaseProvider;
+/*use Music\Lib\DatabaseProvider;
 use Music\Lib\LocalImport;
-use Music\Lib\Song;
+use Music\Model\Song;
 use Music\Lib\SongFinder;
 use Music\Lib\SongOverride;
 use Music\Lib\Storage;
 use Music\Lib\UploadManager;
 use Music\Lib\ViewManager;
-use Music\Util\Brainz;
+use Music\Util\Brainz;*/
 
 class App
 {
@@ -34,11 +34,11 @@ class App
      */
     private $databaseInstance;
     /**
-     * @var \Music\Util\Config
+     * @var \Music\Config\Config
      */
     private $config;
 
-    public function __construct(\Music\Util\Config $config = null)
+    public function __construct(\Music\Config\Config $config = null)
     {
         $this->setupConfig($config);
     }

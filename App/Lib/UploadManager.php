@@ -12,6 +12,8 @@ namespace Music\Lib;
  * http://creativecommons.org/licenses/MIT/
  */
 
+use Music\Model\Song;
+
 class UploadManager
 {
     private $options;
@@ -62,7 +64,7 @@ class UploadManager
 
     private function handle_file_upload($uploaded_file, $name, $size, $type, $error)
     {
-        $file = new stdClass();
+        $file = new \stdClass();
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
         // Also remove control characters and spaces (\x00..\x20) around the filename:
