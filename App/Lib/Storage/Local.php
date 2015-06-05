@@ -1,8 +1,6 @@
 <?php
 namespace Music\Lib\Storage;
 
-use Music\Model\Song;
-
 class Local implements IStorage
 {
     var $storageDir;
@@ -16,13 +14,8 @@ class Local implements IStorage
         }
     }
 
-    function saveFile($filePath, $hash = false)
+    function saveFile($filePath, $hash)
     {
-        if (!$hash) {
-            $parts = Song::getFileParts($filePath);
-            $hash  = $parts['hash'];
-        }
-
         if ($hash === false) {
             return false;
         }
@@ -53,7 +46,6 @@ class Local implements IStorage
 
     function getFilePath($hash)
     {
-        $hash     = str_replace('.mp3', '', $hash);
         $filePath = $this->storageDir . DIRECTORY_SEPARATOR . $hash;
 
         return $filePath;

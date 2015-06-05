@@ -25,7 +25,7 @@ class App
             $action     = "index";
             $args       = array();
         } else {
-            $controller = $param[0];
+            $controller = ucfirst($param[0]);
             $action     = $param[1];
 
             $args = array_slice($param, 2);

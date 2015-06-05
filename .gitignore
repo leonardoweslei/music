@@ -6,3 +6,5 @@ logs/
 .idea/
 Music/config/dev.ini
 vendor/
+images/
+public/assets

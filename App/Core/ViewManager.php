@@ -2,12 +2,20 @@
 namespace Music\Core;
 
 use Music\Config\Config;
+use Music\Util\String;
+use Music\Util\Url;
 
 class ViewManager
 {
     private $vars = array();
     private $type = 'HTML';
     private $viewFile = null;
+    private $basePath = null;
+
+    public function __construct()
+    {
+        $this->basePath = Url::getBaseUrl();
+    }
 
     /**
      * @return mixed
@@ -107,5 +115,18 @@ class ViewManager
     public function __toString()
     {
         return $this->output();
+    }
+
+    public function getBasePath($param)
+    {
+        $param = is_array($param) ? $param : array($param);
+
+        foreach ($param as $i => $v) {
+            $param[$i] = String::slugify($v);
+        }
+
+        $basePath = $this->basePath . implode("/", $param);
+
+        return $basePath;
     }
 }

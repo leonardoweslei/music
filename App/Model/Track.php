@@ -1,9 +1,11 @@
 <?php
 namespace Music\Model;
 
-class PlaylistTrack extends \ActiveRecord\Model
+class Track extends \ActiveRecord\Model
 {
-    static $table_name = 'playlist_track';
-    static $belongs_to = array(array('track'),array('playlist'));
+    static $table_name = 'track';
+    static $primary_key = 'idtrack';
+    static $belongs_to = array(array('album'), array('playlist'));
+    //static $has_many = array(array('extradata'));
 }
 ?>

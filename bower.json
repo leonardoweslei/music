@@ -1,0 +1,26 @@
+{
+  "name": "music2",
+  "version": "0.0.0",
+  "homepage": "https://github.com/leonardoweslei/music",
+  "authors": [
+    "Leonardo Weslei Diniz <leonardoweslei@gmail.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/assets",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.*",
+    "jquery-ui": "~1.9.*",
+    "bootstrap": "~3.1.*",
+    "html5shiv": "~3.7.*",
+    "respond": "~1.4.*"
+  }
+}

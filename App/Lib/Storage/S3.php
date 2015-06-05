@@ -1,8 +1,6 @@
 <?php
 namespace Music\Lib\Storage;
 
-use Music\Model\Song;
-
 require 'S3Instance.php';
 
 class S3 implements IStorage
@@ -61,9 +59,9 @@ class S3 implements IStorage
 
     function getFile($hash, $headers = array())
     {
-        $hash = str_replace('.mp3', '', $hash);
-        $s3   = $this->getS3Instance();
-        $res  = $s3->getObject($this->getAwsBucketName(), $hash, false, $headers);
+        $s3  = $this->getS3Instance();
+        $res = $s3->getObject($this->getAwsBucketName(), $hash, false, $headers);
+
         if ($res === false) {
             return false;
         }
@@ -73,23 +71,18 @@ class S3 implements IStorage
 
     function getInfo($hash)
     {
-        $hash = str_replace('.mp3', '', $hash);
-        $s3   = $this->getS3Instance();
-        $res  = $s3->getObjectInfo($this->getAwsBucketName(), $hash, true);
+        $s3  = $this->getS3Instance();
+        $res = $s3->getObjectInfo($this->getAwsBucketName(), $hash, true);
 
         return $res;
     }
 
-    function saveFile($filePath, $hash = false)
+    function saveFile($filePath, $hash)
     {
-        if (!$hash) {
-            $parts = Song::getFileParts($filePath);
-            $hash  = $parts['hash'];
-        }
-        
         if ($hash === false) {
             return false;
         }
+
         $s3 = $this->getS3Instance();
 
         return $s3->putObject(\S3Instance::inputFile($filePath), $this->getAwsBucketName(), $hash);

@@ -3,7 +3,7 @@ namespace Music\Model;
 
 use Music\Core\DAO;
 
-class Song extends DAO
+class Songx extends DAO
 {
     var $id = 0;
     var $folder = '';

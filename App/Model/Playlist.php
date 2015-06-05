@@ -1,7 +1,7 @@
 <?php
 namespace Music\Model;
 
-class Songs extends \ActiveRecord\Model
+class Playlist extends \ActiveRecord\Model
 {
     static $table_name = 'playlist';
     static $primary_key = 'idplaylist';

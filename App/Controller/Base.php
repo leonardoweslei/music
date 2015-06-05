@@ -7,7 +7,7 @@ class Base extends Controller
 {
     public function indexAction()
     {
-        $this->getViewManager()->setViewFile('main_template.php');
+        $this->getViewManager()->setViewFile('main.php');
 
         return $this->getViewManager();
     }

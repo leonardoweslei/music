@@ -1,6 +1,8 @@
 <?php
 namespace Music\Config;
 
+use Music\Lib\Storage;
+
 class Config
 {
     public static function getParentPath($file)
@@ -148,6 +150,23 @@ class Config
         }
 
         return $viewPath;
+    }
+
+    public static function getStoreManager($type)
+    {
+        $storagePath = self::getConfig('config', $type . "Path");
+        $storagePath = self::getParentPath(__DIR__) . $storagePath;
+
+        if (self::getConfig('config', 'useAWS') == true) {
+            $storageManager = new Storage\S3();
+            $storageManager->setAwsAccessKey(self::getConfig('AWS', 'access_key'));
+            $storageManager->setAwsSecretKey(self::getConfig('AWS', 'secret_key'));
+            $storageManager->setAwsBucketName(self::getConfig('AWS', 'bucket_name'));
+        } else {
+            $storageManager = new Storage\Local($storagePath);
+        }
+
+        return $storageManager;
     }
 
     public static function getModelPath()
