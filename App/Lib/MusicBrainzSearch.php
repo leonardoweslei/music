@@ -10,8 +10,9 @@ use MusicBrainz\Filters\RecordingFilter;
 use MusicBrainz\Filters\ReleaseGroupFilter;
 use MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
 use MusicBrainz\MusicBrainz;
+use MusicBrainz\Release;
 
-class Brainz
+class MusicBrainzSearch
 {
     private $brainz;
 
@@ -33,7 +34,7 @@ class Brainz
         );
 
         try {
-            $releaseArtists = $this->brainz->search(new ArtistFilter($args));
+            $releaseArtists = $this->brainz->search(new Release($args));
 
             if (count($releaseArtists) > 0) {
                 foreach ($releaseArtists as $artist) {

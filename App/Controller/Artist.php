@@ -3,6 +3,11 @@ namespace Music\Controller;
 
 use Music\Config\Config;
 use Music\Core\Controller;
+use Music\Lib\GoogleImageSearch;
+use Music\Lib\Image;
+use Music\Lib\ImageManager;
+use Music\Lib\LastFmSearch;
+use Music\Lib\MusicBrainzSearch;
 use Music\Model\Artist as ArtistModel;
 use Music\Util\Url;
 
@@ -20,6 +25,7 @@ class Artist extends Controller
 
     public function artAction($param)
     {
+        $error           = false;
         $idartist        = $param[0];
         $artist          = ArtistModel::find_by_idartist($idartist);
         $objStoreManager = Config::getStoreManager('image');
@@ -27,34 +33,43 @@ class Artist extends Controller
         $info            = $objStoreManager->getInfo($artistHash);
 
         if (!$info['size']) {
-            $param = array(
-                'v'   => '1.0',
-                'key' => 'AIzaSyALp6qvMuW2uGx1qg_kvmE-UtFPyZvoVqA',
-                'q'   => $artist->name . ' filetype:jpg'
-            );
+            $objLastFmSearch = new LastFmSearch();
+            $artistImages    = $objLastFmSearch->searchArtist($artist->name);
 
-            $url = 'https://ajax.googleapis.com/ajax/services/search/images?' . http_build_query($param);
-
-            $json = file_get_contents($url);
-            $json = json_decode($json);
-
-            if ($json && $json->responseData && $json->responseData->results) {
-                if (count($json->responseData->results) > 0) {
-                    foreach ($json->responseData->results as $r) {
-
-                        $pTam = $r->width * 100 / $r->height;
-
-                        if ($r->width == $r->height || ($pTam >= 90 && $pTam <= 110)) {
-                            $img = $r->tbUrl;
-                            $objStoreManager->saveFile($img, $artistHash);
-                            break;
-                        }
+            if (!empty($artistImages['image'])) {
+                foreach ($artistImages['image'] as $imageURL) {
+                    if ($imageURL['size'] == "extralarge") {
+                        break;
                     }
                 }
+
+                $imageURL = $imageURL['#text'];
+            }
+
+            if (!$imageURL) {
+                $imageURL = GoogleImageSearch::search($artist->name);
+            }
+
+
+            if ($imageURL) {
+                $imageURL = ImageManager::resize($imageURL);
+                $objStoreManager->saveFile($imageURL, $artistHash);
+            } else {
+                $error = true;
             }
         }
 
-        Url::getFile($objStoreManager, $artistHash, "image/jpeg");
+        try {
+            Url::getFile($objStoreManager, $artistHash, "image/jpeg");
+        } catch (\Exception $e) {
+            $error = true;
+        }
+
+        if ($error) {
+            $file = Config::getRootPath() . "default/disc.png";
+            Url::getFileDirectly($file);
+        }
+
         exit();
     }
 }

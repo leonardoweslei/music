@@ -66,7 +66,7 @@ class Url
         if (!headers_sent()) {
             header("Location: {$location}");
         } else {
-            echo "<script>window.location.href='{$location}';</script>";
+            echo '<script>window.location.href="' . $location . '";</script>';
         }
         exit;
     }
@@ -120,6 +120,29 @@ class Url
         if ($output === false) {
             throw new \Exception('Error loading file');
         }
+        self::_outputHeaders($headers);
+
+        echo $output;
+    }
+
+    public static function getFileDirectly($file)
+    {
+        $finfo    = @finfo_open(FILEINFO_MIME_TYPE);
+        $fileType = @finfo_file($finfo, $file);
+        @finfo_close($finfo);
+
+        $header    = array();
+        $headers[] = 'Accept-Ranges: bytes';
+        $headers[] = 'Content-type: ' . $fileType;
+        $headers[] = 'Cache-Control: must-revalidate, post-check=0, pre-check=0';
+        $headers[] = 'Pragma: public';
+
+        $output = @file_get_contents($file);
+
+        if ($output === false) {
+            throw new \Exception('Error loading file');
+        }
+
         self::_outputHeaders($headers);
 
         echo $output;

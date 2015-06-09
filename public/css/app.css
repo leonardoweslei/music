@@ -1,159 +1,188 @@
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-ms-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+/* line 27, app.scss */
 body {
-    padding-top: 50px;
+  padding-top: 50px;
 }
 
 /*
  * Global add-ons
  */
-
+/* line 34, app.scss */
 .sub-header {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 }
 
 /*
  * Top navigation
  * Hide default border to remove 1px line.
  */
+/* line 43, app.scss */
 .navbar-fixed-top {
-    border: 0;
+  border: 0;
 }
 
 /*
  * Sidebar
  */
-
 /* Hide for mobile, show later */
+/* line 52, app.scss */
 .sidebar {
-    display: none;
-    padding-bottom: 100px;
-    overflow-x: auto;
+  display: none;
+  padding-bottom: 100px;
+  overflow-x: auto;
 }
-
 @media (min-width: 768px) {
-    .sidebar {
-        position: fixed;
-        top: 51px;
-        bottom: 0;
-        left: 0;
-        z-index: 1000;
-        display: block;
-        padding: 20px;
-        overflow-x: hidden;
-        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        background-color: #f5f5f5;
-        border-right: 1px solid #eee;
-    }
+  /* line 52, app.scss */
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
 }
 
 /* Sidebar navigation */
+/* line 73, app.scss */
 .nav-sidebar {
-    margin-right: -21px; /* 20px padding + 1px border */
-    margin-bottom: 20px;
-    margin-left: -20px;
+  margin-right: -21px;
+  /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
 }
-
+/* line 79, app.scss */
 .nav-sidebar > li > a {
-    padding-right: 20px;
-    padding-left: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
-
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-    color: #fff;
-    background-color: #428bca;
+/* line 86, app.scss */
+.nav-sidebar .active a, .nav-sidebar .active a:hover, .nav-sidebar .active a:focus {
+  color: #fff;
+  background-color: #428bca;
 }
 
 /*
  * Main content
  */
-
+/* line 97, app.scss */
 .main {
-    padding: 20px;
+  padding: 20px;
 }
-
 @media (min-width: 768px) {
-    .main {
-        padding-right: 40px;
-        padding-left: 40px;
-    }
+  /* line 97, app.scss */
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
 }
-
+/* line 106, app.scss */
 .main .page-header {
-    margin-top: 0;
+  margin-top: 0;
 }
 
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-    margin-bottom: 30px;
-    text-align: center;
+/* line 112, app.scss */
+.artist-cover {
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+/* line 119, app.scss */
+.artist-cover .art-caption {
+  position: absolute;
+  top: 0;
+  display: table;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+/* line 128, app.scss */
+.artist-cover .art-caption span {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+  text-shadow: 0px 0px 9px #CCC;
+}
+/* line 139, app.scss */
+.artist-cover img {
+  display: inline-block;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
 }
 
-.placeholders h4 {
-    margin-bottom: 0;
-}
-
-.placeholder {
-    margin-bottom: 20px;
-}
-
-.placeholder img {
-    display: inline-block;
-    border-radius: 50%;
-}
-
+/* line 147, app.scss */
 .player-container {
-    position: absolute;
-    bottom: 0;
-    height: 100px;
-    background-color: #f5f5f5;
-    left: 0;
-    z-index: 9999;
-    text-align: center;
-    overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  background-color: #f5f5f5;
+  left: 0;
+  z-index: 9999;
+  text-align: center;
+  overflow: hidden;
+}
+/* line 157, app.scss */
+.player-container .player-button {
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 1.5em;
 }
 
-.player-button {
-    width: 1.5em;
-    height: 1.5em;
-    font-size: 1.5em;
-}
-
-@keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
+/* line 165, app.scss */
 .loader-container {
-    text-align: center;
+  text-align: center;
 }
 
+/* line 169, app.scss */
 .loader-wait {
-    margin-top: 20%;
-    font-size: 5em;
-    color: #FFFFFF;
-    -webkit-animation: rotate 2s linear infinite;
-    animation: rotate 2s linear infinite;
+  margin-top: 20%;
+  font-size: 5em;
+  color: #FFFFFF;
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
 }

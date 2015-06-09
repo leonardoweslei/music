@@ -8,3 +8,5 @@ Music/config/dev.ini
 vendor/
 images/
 public/assets
+.sass-cache/
+public/css/*.css

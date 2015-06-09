@@ -169,13 +169,24 @@ class Config
         return $storageManager;
     }
 
+    public static function getRootPath()
+    {
+        $rootPath = self::getConfig('path', "rootPath");
+
+        if (empty($rootPath)) {
+            $rootPath = self::getParentPath(__DIR__);
+            self::setConfig('path', 'rootPath', $rootPath);
+        }
+
+        return $rootPath;
+    }
+
     public static function getModelPath()
     {
         $modelPath = self::getConfig('path', 'model');
 
         if (empty($modelPath)) {
             $modelPath = self::getParentPath(__FILE__) . "Model" . DIRECTORY_SEPARATOR;
-
             self::setConfig('path', 'model', $modelPath);
         }
 

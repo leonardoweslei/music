@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad3d671291d775d5abee3a3a7952b510",
+    "hash": "3d89b193477d5df34dcff424e46a115d",
     "packages": [
+        {
+            "name": "dandelionmood/lastfm",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dandelionmood/php-lastfm.git",
+                "reference": "8ad35aaec70ac3ff259f483d62d58f3d3a8ae375"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dandelionmood/php-lastfm/zipball/8ad35aaec70ac3ff259f483d62d58f3d3a8ae375",
+                "reference": "8ad35aaec70ac3ff259f483d62d58f3d3a8ae375",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": ">=0.9",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "2.8.0",
+                "phpunit/phpunit": "3.7.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Dandelionmood": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre Quillery",
+                    "email": "pierre+lastfm@quillery.fr",
+                    "homepage": "http://pierre.quillery.fr/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dead simple wrapper for the Last.fm API.",
+            "homepage": "https://github.com/dandelionmood/php-lastfm",
+            "keywords": [
+                "api",
+                "fm",
+                "last",
+                "last.fm",
+                "wrapper"
+            ],
+            "time": "2014-10-20 11:46:14"
+        },
         {
             "name": "guzzle/guzzle",
             "version": "v3.8.1",
@@ -99,17 +150,122 @@
             "time": "2014-01-28 22:29:15"
         },
         {
-            "name": "mikealmond/musicbrainz",
-            "version": "v0.2.1",
+            "name": "imagine/imagine",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mikealmond/MusicBrainz.git",
-                "reference": "8d482e3e7c46e81f7ddebc43018d7cc3555cfc96"
+                "url": "https://github.com/avalanche123/Imagine.git",
+                "reference": "10e9522f11a6e846061226b7e54347909a849e09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikealmond/MusicBrainz/zipball/8d482e3e7c46e81f7ddebc43018d7cc3555cfc96",
-                "reference": "8d482e3e7c46e81f7ddebc43018d7cc3555cfc96",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/10e9522f11a6e846061226b7e54347909a849e09",
+                "reference": "10e9522f11a6e846061226b7e54347909a849e09",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "suggest": {
+                "ext-gd": "to use the GD implementation",
+                "ext-gmagick": "to use the Gmagick implementation",
+                "ext-imagick": "to use the Imagick implementation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "drawing",
+                "graphics",
+                "image manipulation",
+                "image processing"
+            ],
+            "time": "2014-08-26 11:26:34"
+        },
+        {
+            "name": "kriswallsmith/buzz",
+            "version": "v0.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/Buzz.git",
+                "reference": "f802a9b9d01b53496f50c9c5e09b5c779cbbd300"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/f802a9b9d01b53496f50c9c5e09b5c779cbbd300",
+                "reference": "f802a9b9d01b53496f50c9c5e09b5c779cbbd300",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Buzz": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
+            "keywords": [
+                "curl",
+                "http client"
+            ],
+            "time": "2015-06-02 16:48:29"
+        },
+        {
+            "name": "mikealmond/musicbrainz",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikealmond/MusicBrainz.git",
+                "reference": "36ca9ea8ea53d139077f48ea6a22f4c27c54d5ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikealmond/MusicBrainz/zipball/36ca9ea8ea53d139077f48ea6a22f4c27c54d5ce",
+                "reference": "36ca9ea8ea53d139077f48ea6a22f4c27c54d5ce",
                 "shasum": ""
             },
             "require": {
@@ -154,7 +310,7 @@
                 "musicbrainz",
                 "php"
             ],
-            "time": "2014-02-19 19:45:27"
+            "time": "2014-02-19 19:45:48"
         },
         {
             "name": "nass600/get-id3",
@@ -307,7 +463,10 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "php-activerecord/php-activerecord": 20,
-        "nass600/get-id3": 20
+        "nass600/get-id3": 20,
+        "imagine/imagine": 20,
+        "mikealmond/musicbrainz": 20,
+        "dandelionmood/lastfm": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
