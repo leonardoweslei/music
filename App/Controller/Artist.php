@@ -33,6 +33,7 @@ class Artist extends Controller
         $info            = $objStoreManager->getInfo($artistHash);
 
         if (!$info['size']) {
+            $imageURL        = "";
             $objLastFmSearch = new LastFmSearch();
             $artistImages    = $objLastFmSearch->searchArtist($artist->name);
 
@@ -49,7 +50,6 @@ class Artist extends Controller
             if (!$imageURL) {
                 $imageURL = GoogleImageSearch::search($artist->name);
             }
-
 
             if ($imageURL) {
                 $imageURL = ImageManager::resize($imageURL);
