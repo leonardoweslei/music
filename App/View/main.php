@@ -51,17 +51,17 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#artists" id="artist-list-action">Artists</a></li>
-                <li><a href="#favorites" id="favorites-list-action">Favorites</a></li>
+                <li class="active"><a href="#artists" class="artist-list-action">Artists</a></li>
+                <li><a href="#favorites" class="favorites-list-action">Favorites</a></li>
             </ul>
-            <a href="#playlists" id="playlist-anchor-list">Playlists</a>
+            <a href="#playlists" class="playlist-anchor-list">Playlists</a>
             <ul class="nav nav-sidebar">
                 <li><a href="">1</a></li>
             </ul>
             <p>Import</p>
             <ul class="nav nav-sidebar">
-                <li><a href="#local" id="import-local-action">Local folder in server</a></li>
-                <li><a href="#legacy" id="import-legacy-action">Legacy table in database</a></li>
+                <li><a href="#local" class="import-local-action">Local folder in server</a></li>
+                <li><a href="#legacy" class="import-legacy-action">Legacy table in database</a></li>
             </ul>
         </div>
         <div class="col-sm-3  col-md-2 player-container">

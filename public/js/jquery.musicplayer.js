@@ -7,10 +7,12 @@
         var me = this, my = {};
 
         my.defaults = {
-            mainContainer: '#main',
-            importLocalTrigger: '#import-local-action',
-            importLegacyTrigger: '#import-legacy-action',
-            artistListTrigger: '#artist-list-action'
+            MainContainer: '#main',
+            ImportLocalTrigger: '.import-local-action',
+            ImportLegacyTrigger: '.import-legacy-action',
+            ArtistListTrigger: '.artist-list-action',
+            AlbumListTrigger: '.album-list-action',
+            TrackListTrigger: '.track-list-action'
         };
 
         my.settings = my.defaults;
@@ -42,22 +44,74 @@
             return url;
         };
 
-        my.genericAction = function (target, actionName, callback) {
+        my.genericAction = function (trigger, actionName, callback) {
             actionName = my.getPath(actionName);
-            callback = callback || function (d) {
-                $(my.settings.mainContainer).hide().html(d).show();
+
+            callback = callback || function () {
             };
 
-            var baseCallback = function (data) {
-                callback(data);
-                me.loadingHide();
-            };
-
-            $(target).click(function (e) {
-                e.preventDefault();
+            trigger = trigger || function () {
                 me.loadingShow();
-                $.get(actionName, baseCallback);
-            });
+                $.get(actionName, function (d) {
+                    $(my.settings.MainContainer).hide().html(d).show();
+                    callback(d);
+                    me.loadingHide();
+                });
+            };
+
+            trigger();
+        };
+
+        me.ImportLegacy = function (e) {
+            e = e || false;
+
+            my.genericAction(false, "/import/legacy");
+
+            if (e) {
+                e.preventDefault();
+            }
+        };
+
+        me.ImportLocal = function (e) {
+            e = e || false;
+
+            my.genericAction(false, "/import/local");
+
+            if (e) {
+                e.preventDefault();
+            }
+        };
+
+        me.ArtistList = function (e) {
+            e = e || false;
+
+            my.genericAction(false, "/artist/list");
+
+            if (e) {
+                e.preventDefault();
+            }
+        };
+
+        me.AlbumsList = function (e) {
+            e = e || false;
+            var id = $(this).data('id');
+
+            my.genericAction(false, "/album/list/" + id);
+
+            if (e) {
+                e.preventDefault();
+            }
+        };
+
+        me.TrackList = function (e) {
+            e = e || false;
+            var id = $(this).data('id');
+
+            my.genericAction(false, "/track/list/" + id);
+
+            if (e) {
+                e.preventDefault();
+            }
         };
 
         me.loadingHide = function () {
@@ -71,7 +125,7 @@
                 '</div>';
             var objLoader = $(htmlLoader);
             objLoader.hide();
-            $(my.settings.mainContainer).append(objLoader);
+            $(my.settings.MainContainer).append(objLoader);
             objLoader.show();
         };
 
@@ -80,10 +134,12 @@
             param = param || [];
 
             my.settings = $.extend(my.defaults, param);
-            my.genericAction(my.settings.importLegacyTrigger, "/import/legacy");
-            my.genericAction(my.settings.importLocalTrigger, "/import/local");
+            $(document).on('click', my.settings.ImportLegacyTrigger, me.ImportLegacy);
+            $(document).on('click', my.settings.ImportLocalTrigger, me.ImportLocal);
 
-            my.genericAction(my.settings.artistListTrigger, "/artist/list");
+            $(document).on('click', my.settings.ArtistListTrigger, me.ArtistList);
+            $(document).on('click', my.settings.AlbumListTrigger, me.AlbumsList);
+            $(document).on('click', my.settings.TrackListTrigger, me.TrackList);
         };
     };
 

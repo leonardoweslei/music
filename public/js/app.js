@@ -1,3 +1,5 @@
 $(document).ready(function () {
-    var musicPlayer= $.musicPlayer();
+    var musicPlayer = $.musicPlayer();
+    musicPlayer.ArtistList();
+
 });
